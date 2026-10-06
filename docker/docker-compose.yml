@@ -1,0 +1,24 @@
+# Local development database only. The API (dotnet run) and frontend (npm run dev) run on the host.
+#   $env:POSTGRES_PASSWORD = "<choose one>"; docker compose -f docker/docker-compose.yml up -d
+# Skip this file if PostgreSQL is already installed locally on port 5432.
+name: worknexa-dev
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: worknexa_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - dev-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d worknexa_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  dev-db:

@@ -1,0 +1,107 @@
+# Staging and production stack: PostgreSQL, a one-off migration job, the API and the web server.
+# Each environment has its own env file (see .env.example) and its own Docker project name:
+#   docker compose -f docker/docker-compose.prod.yml --env-file docker/.env.production up -d --build
+# TLS is terminated in front of the web service (load balancer, ingress or host reverse proxy).
+name: ${COMPOSE_PROJECT_NAME:-worknexa}
+
+x-api-image: &api-image
+  image: ${WORKNEXA_API_IMAGE:-worknexa-api}:${WORKNEXA_VERSION:?Set WORKNEXA_VERSION}
+  build:
+    context: ../backend
+    args:
+      VERSION: ${WORKNEXA_VERSION}
+
+x-database: &database
+  ConnectionStrings__Worknexa: "Host=db;Port=5432;Database=${POSTGRES_DB:-worknexa_db};Username=${POSTGRES_USER:-worknexa};Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD};Search Path=worknexa"
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-worknexa_db}
+      POSTGRES_USER: ${POSTGRES_USER:-worknexa}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # Applies pending EF Core migrations, then exits. The API waits for it; the API itself never migrates.
+  migrate:
+    <<: *api-image
+    entrypoint: ["/app/efbundle"]
+    restart: "no"
+    environment:
+      <<: *database
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [backend]
+
+  api:
+    <<: *api-image
+    restart: unless-stopped
+    environment:
+      <<: *database
+      ASPNETCORE_ENVIRONMENT: Production
+      DEPLOYMENT_ENVIRONMENT: ${DEPLOYMENT_ENVIRONMENT:-production}
+      Serilog__Properties__Environment: ${DEPLOYMENT_ENVIRONMENT:-production}
+      Auth__SigningKey: ${AUTH_SIGNING_KEY:?Set AUTH_SIGNING_KEY}
+      Cors__AllowedOrigins__0: ${PUBLIC_ORIGIN:?Set PUBLIC_ORIGIN}
+      ForwardedHeaders__Enabled: "true"
+      ForwardedHeaders__KnownNetworks__0: ${EDGE_SUBNET:-172.30.0.0/24}
+      Work__AttachmentRoot: /data/attachments
+      Integrations__KeyDirectory: /data/keys
+      Integrations__ReturnUrl: /settings
+      Integrations__Outlook__ClientId: ${OUTLOOK_CLIENT_ID:-}
+      Integrations__Outlook__ClientSecret: ${OUTLOOK_CLIENT_SECRET:-}
+      Integrations__Outlook__TenantId: ${OUTLOOK_TENANT_ID:-common}
+      Integrations__Outlook__RedirectUri: ${PUBLIC_ORIGIN}/api/integrations/oauth/callback
+      Assistant__OpenAI__ApiKey: ${OPENAI_API_KEY:-}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      OTEL_EXPORTER_OTLP_HEADERS: ${OTEL_EXPORTER_OTLP_HEADERS:-}
+      OTEL_SERVICE_NAME: worknexa-api
+    volumes:
+      - attachments:/data/attachments
+      - keys:/data/keys
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    networks: [backend, edge]
+
+  web:
+    image: ${WORKNEXA_WEB_IMAGE:-worknexa-web}:${WORKNEXA_VERSION}
+    build:
+      context: ../frontend
+    restart: unless-stopped
+    environment:
+      API_UPSTREAM: http://api:8080
+      TRUSTED_PROXY_CIDR: ${TRUSTED_PROXY_CIDR:-127.0.0.1/32}
+    ports:
+      - "${WEB_BIND:-127.0.0.1}:${WEB_PORT:-8080}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [edge]
+
+networks:
+  # No route out: only the API and the migration job reach the database.
+  backend:
+    internal: true
+  # The API trusts X-Forwarded-* only from this subnet (the web server).
+  edge:
+    ipam:
+      config:
+        - subnet: ${EDGE_SUBNET:-172.30.0.0/24}
+
+volumes:
+  db-data:
+  attachments:
+  keys:

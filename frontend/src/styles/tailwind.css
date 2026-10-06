@@ -1,0 +1,33 @@
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-canvas: var(--wx-canvas);
+  --color-surface: var(--wx-surface);
+  --color-surface-muted: var(--wx-surface-muted);
+  --color-ink: var(--wx-ink);
+  --color-muted: var(--wx-muted);
+  --color-line: var(--wx-line);
+  --color-accent: var(--wx-accent);
+  --color-accent-foreground: var(--wx-accent-foreground);
+  --color-accent-soft: var(--wx-accent-soft);
+  --color-signal: var(--wx-signal);
+  --color-signal-soft: var(--wx-signal-soft);
+  --color-warning: var(--wx-warning);
+  --color-warning-soft: var(--wx-warning-soft);
+  --color-danger: var(--wx-danger);
+  --color-danger-soft: var(--wx-danger-soft);
+  --color-overlay: var(--wx-overlay);
+  --color-shadcn-background: var(--shadcn-background);
+  --color-shadcn-foreground: var(--shadcn-foreground);
+  --color-shadcn-primary: var(--shadcn-primary);
+  --color-shadcn-primary-foreground: var(--shadcn-primary-foreground);
+  --color-shadcn-muted: var(--shadcn-muted);
+  --color-shadcn-border: var(--shadcn-border);
+  --font-sans: var(--wx-font);
+  --radius-control: 8px;
+  --radius-card: 12px;
+}

@@ -1,0 +1,6 @@
+@Worknexa.Api_HostAddress = http://localhost:5003
+
+GET {{Worknexa.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

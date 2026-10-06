@@ -1,0 +1,16 @@
+{
+  "createTask": "Plan a new task. Use it when the person asks to create, add, or assign a task. Returns a plan for the person to confirm.",
+  "updateTask": "Plan changes to an existing task: title, status, priority, due date, or assignee. Returns a plan for the person to confirm.",
+  "searchTasks": "Find tasks. Give a query to search by title, or leave it out and filter by status, mine, or overdue.",
+  "getMyDay": "Summarise a day: tasks due, overdue work, meetings, reminders, team items, and learning.",
+  "getCalendar": "List calendar entries (events, meetings, and task deadlines) between two dates, up to 31 days.",
+  "createReminder": "Plan a personal reminder at a date and time. Returns a plan for the person to confirm.",
+  "searchProjects": "Find projects by name or code, with progress and open task counts.",
+  "getProjectStatus": "Get one project's status: progress, open, completed and blocked tasks, upcoming deadlines, and workload.",
+  "searchTeam": "Find people by name, email, designation, or department.",
+  "getTeamWorkload": "Show each team member's assigned, in-progress, completed, overdue, and blocked tasks.",
+  "searchNotes": "Search general notes, learning notes, and meeting notes by text.",
+  "createMeetingNote": "Plan additions to a meeting's notes: discussion, decisions, or follow-ups. Existing notes are kept. Returns a plan for the person to confirm.",
+  "createLearningNote": "Plan a new note on a learning topic. Returns a plan for the person to confirm.",
+  "getLearningProgress": "Get learning progress: overall progress, topics in progress, completed topics, and upcoming targets."
+}
