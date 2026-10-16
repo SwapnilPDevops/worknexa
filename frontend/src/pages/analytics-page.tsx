@@ -21,7 +21,7 @@ export function AnalyticsPage() {
   }, []);
 
   if (query.isPending) {
-    return <div className="mx-auto max-w-6xl"><LoadingState label="Loading analytics" /></div>;
+    return <div className="w-full"><LoadingState label="Loading analytics" /></div>;
   }
 
   if (query.isError || !query.data) {

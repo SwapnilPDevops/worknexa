@@ -107,11 +107,11 @@ export function LearningView() {
 
   const board = dashboard.data;
   return (
-    <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Learning</h1>
-          <p className="mt-1 text-sm text-muted">Topics you are studying, and what comes next.</p>
+          <h1 className="wx-headline-lg text-[#111827]">Learning</h1>
+          <p className="mt-1.5 text-sm leading-[20px] text-[#4B5563]">Topics you are studying, and what comes next.</p>
         </div>
         <div className="flex gap-2">
           <Button asChild variant="secondary"><Link to="/roadmap">Roadmap</Link></Button>
@@ -154,9 +154,9 @@ export function LearningView() {
             {board.upcomingTargets.length === 0 ? <p className="text-sm text-muted">Set a target date to plan the next step.</p> : (
               <ul className="grid gap-2 sm:grid-cols-2">
                 {board.upcomingTargets.map((target) => (
-                  <li key={target.topicId} className="rounded-lg border border-line px-3 py-2">
-                    <p className="text-sm font-medium">{target.name}</p>
-                    <p className="text-xs text-muted">{target.targetDate} · {target.progress}%</p>
+                  <li key={target.topicId} className="rounded-[8px] border border-[#D1CCC2] bg-[#EBE8E2] px-3 py-2">
+                    <p className="text-sm font-semibold text-[#111827] font-mono">{target.name}</p>
+                    <p className="text-xs text-[#4B5563] font-serif">{target.targetDate} · {target.progress}%</p>
                   </li>
                 ))}
               </ul>

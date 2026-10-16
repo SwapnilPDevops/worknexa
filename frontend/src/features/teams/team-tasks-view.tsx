@@ -96,11 +96,11 @@ export function TeamTasksView() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Team Tasks</h1>
-          <p className="mt-1 text-sm text-muted">Workload across the team, using the same tasks as the rest of the workspace.</p>
+          <h1 className="wx-headline-lg text-[#111827]">Team Tasks</h1>
+          <p className="mt-1.5 text-sm leading-[20px] text-[#4B5563]">Workload across the team, using the same tasks as the rest of the workspace.</p>
         </div>
         <Field label="Team">{({ id }) => (
           <Select id={id} value={selected} onChange={(event) => setTeamId(event.target.value)}>

@@ -22,9 +22,9 @@ export function SidebarNav({ collapsed, onNavigate }: SidebarNavProps) {
         {sections.map((section) => (
           <div key={section.label}>
             {collapsed ? null : (
-              <p className="px-2 pb-1 text-[11px] font-semibold tracking-[0.14em] text-muted uppercase">{section.label}</p>
+              <p className="px-2 pb-1.5 text-[11px] font-semibold tracking-[0.14em] text-muted/80 uppercase">{section.label}</p>
             )}
-            <ul className="space-y-0.5">
+            <ul className="space-y-1">
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const link = (
@@ -36,13 +36,13 @@ export function SidebarNav({ collapsed, onNavigate }: SidebarNavProps) {
                     aria-label={collapsed ? item.label : undefined}
                     className={({ isActive }) =>
                       cn(
-                        "flex h-8 items-center gap-2 rounded-lg px-2 text-[13px] text-muted transition-colors hover:bg-surface-muted hover:text-ink",
+                        "flex h-8.5 items-center gap-2.5 rounded-[8px] px-2.5 text-xs text-[#4B5563] transition-[background-color,color,border-color] duration-150 hover:bg-[#EBE8E2] hover:text-[#111827]",
                         collapsed && "justify-center px-0",
-                        isActive && "bg-accent-soft font-medium text-accent",
+                        isActive && "bg-[#FED7AA] font-semibold text-[#111827] border border-[#111827]/15 shadow-xs [&>svg]:text-[#111827]",
                       )
                     }
                   >
-                    <Icon size={16} aria-hidden="true" />
+                    <Icon size={16} aria-hidden="true" className="shrink-0" />
                     {collapsed ? null : <span className="truncate">{item.label}</span>}
                   </NavLink>
                 );
@@ -77,15 +77,15 @@ export function Sidebar() {
 
   return (
     <aside
-      className="sticky top-0 hidden h-dvh flex-col border-r border-line bg-surface transition-[width] duration-200 lg:flex"
+      className="sticky top-0 hidden h-dvh flex-col border-r border-[#D1CCC2] bg-[#DFDCD6] transition-[width] duration-200 lg:flex"
       style={{ width: sidebarCollapsed ? "var(--wx-sidebar-collapsed)" : "var(--wx-sidebar)" }}
     >
       <Brand collapsed={sidebarCollapsed} />
       <SidebarNav collapsed={sidebarCollapsed} />
-      <div className="border-t border-line p-2">
-        <Button variant="ghost" className={cn("w-full", sidebarCollapsed ? "px-0" : "justify-start")} onClick={toggleSidebar} aria-pressed={sidebarCollapsed}>
+      <div className="border-t border-[#D1CCC2] p-2">
+        <Button variant="ghost" className={cn("w-full text-[#4B5563] hover:text-[#111827] hover:bg-[#EBE8E2]", sidebarCollapsed ? "px-0" : "justify-start")} onClick={toggleSidebar} aria-pressed={sidebarCollapsed}>
           {sidebarCollapsed ? <PanelLeftOpen size={16} aria-hidden="true" /> : <PanelLeftClose size={16} aria-hidden="true" />}
-          {sidebarCollapsed ? <span className="sr-only">Expand sidebar</span> : <span>Collapse</span>}
+          {sidebarCollapsed ? <span className="sr-only">Expand sidebar</span> : <span className="text-xs">Collapse</span>}
         </Button>
       </div>
     </aside>
@@ -94,8 +94,8 @@ export function Sidebar() {
 
 export function Brand({ collapsed }: { collapsed?: boolean }) {
   return (
-    <Link to="/" className={cn("flex h-14 items-center gap-2.5 border-b border-line px-3", collapsed && "justify-center px-0")}>
-      <img src="/brand/worknexa-mark.svg" alt="" width={32} height={32} className="size-8 shrink-0" />
+    <Link to="/" className={cn("flex h-14 items-center gap-2.5 border-b border-[#D1CCC2] px-3.5", collapsed && "justify-center px-0")}>
+      <img src="/brand/worknexa-mark.svg" alt="" width={28} height={28} className="size-7 shrink-0" />
       {collapsed ? <span className="sr-only">Worknexa</span> : <BrandText />}
     </Link>
   );
@@ -104,8 +104,8 @@ export function Brand({ collapsed }: { collapsed?: boolean }) {
 function BrandText() {
   return (
     <span className="min-w-0">
-      <span className="block text-sm font-semibold tracking-tight text-ink">Worknexa</span>
-      <span className="block truncate text-[11px] text-muted">Your Work. One Intelligent Place.</span>
+      <span className="block text-sm font-semibold tracking-tight text-[#111827]">Worknexa</span>
+      <span className="block truncate text-[10px] text-[#4B5563] font-mono">SYS.DOC // WORKNEXA</span>
     </span>
   );
 }

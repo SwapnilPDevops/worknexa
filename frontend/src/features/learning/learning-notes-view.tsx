@@ -15,6 +15,7 @@ import { deleteNote, fetchNote, fetchNoteOptions, fetchNotes, saveNote, type Not
 import { useAutosave } from "../notes/use-autosave.ts";
 import { fetchWorkOptions } from "../work/api.ts";
 import { TopicResources } from "./topic-resources.tsx";
+import { cn } from "../../utils/cn.ts";
 
 type Draft = {
   title: string;
@@ -100,12 +101,12 @@ export function LearningNotesView() {
   }
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-[18rem_minmax(0,1fr)]">
+    <div className="grid w-full gap-4 lg:grid-cols-[18rem_minmax(0,1fr)]">
       <aside className="space-y-3">
         <header className="flex items-end justify-between gap-2">
           <div>
-            <h1 className="text-lg font-semibold">Learning notes</h1>
-            <p className="text-sm text-muted">Markdown, tags, and favorites, linked to a topic.</p>
+            <h1 className="text-xl font-semibold tracking-tight text-[#111827]">Learning notes</h1>
+            <p className="text-xs text-[#4B5563] font-serif">Markdown, tags, and favorites, linked to a topic.</p>
           </div>
           {canEdit ? <Button size="sm" onClick={() => { setCreating(true); setSelectedId(null); }}>New</Button> : null}
         </header>
@@ -117,12 +118,21 @@ export function LearningNotesView() {
           <ul className="space-y-2">
             {notes.data.map((note) => (
               <li key={note.id}>
-                <button type="button" className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-left" onClick={() => { setCreating(false); setSelectedId(note.id); setOpenNote(note); }}>
-                  <span className="flex items-center gap-1 text-sm font-medium">
-                    {note.isFavorite ? <Star className="size-3 text-accent" aria-label="Favorite" /> : null}
+                <button
+                  type="button"
+                  className={cn(
+                    "w-full rounded-[8px] border px-3.5 py-2.5 text-left transition-all cursor-pointer",
+                    note.id === selectedId
+                      ? "bg-[#FED7AA] border-[#111827]/15 text-[#111827] shadow-xs"
+                      : "bg-[#EBE8E2] border-[#D1CCC2] text-[#4B5563] hover:text-[#111827] hover:border-[#111827]/30"
+                  )}
+                  onClick={() => { setCreating(false); setSelectedId(note.id); setOpenNote(note); }}
+                >
+                  <span className="flex items-center gap-1.5 text-sm font-medium text-[#111827]">
+                    {note.isFavorite ? <Star className="size-3 text-[#111827]" aria-label="Favorite" /> : null}
                     {note.title}
                   </span>
-                  <span className="text-xs text-muted">{note.learningTopicTitle ?? "No topic"} · {format(new Date(note.updatedAt), "d MMM")}</span>
+                  <span className="text-xs text-[#4B5563] font-serif">{note.learningTopicTitle ?? "No topic"} · {format(new Date(note.updatedAt), "d MMM")}</span>
                 </button>
               </li>
             ))}

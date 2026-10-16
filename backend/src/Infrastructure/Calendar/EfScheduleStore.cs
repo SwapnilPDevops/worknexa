@@ -19,11 +19,13 @@ public sealed class EfCalendarStore(WorknexaDbContext context) : ICalendarStore
 {
     public async Task<IReadOnlyList<EventSeries>> SeriesAsync(Guid userId, DateTimeOffset from, DateTimeOffset to, CancellationToken cancellationToken)
     {
+        var fromUtc = from.ToUniversalTime();
+        var toUtc = to.ToUniversalTime();
         return await context.CalendarEvents.AsNoTracking()
             .Where(item =>
                 (item.OrganizerId == userId || item.Participants.Any(participant => participant.UserId == userId))
-                && item.StartAt < to
-                && (item.Recurrence != Recurrence.None || item.EndAt > from))
+                && item.StartAt < toUtc
+                && (item.Recurrence != Recurrence.None || item.EndAt > fromUtc))
             .OrderBy(item => item.StartAt)
             .Take(200)
             .Select(item => new EventSeries(
@@ -51,6 +53,10 @@ public sealed class EfCalendarStore(WorknexaDbContext context) : ICalendarStore
 
     public async Task<IReadOnlyList<CalendarTaskSpan>> TasksAsync(Guid userId, DateTimeOffset from, DateTimeOffset to, CancellationToken cancellationToken)
     {
+        var fromUtc = from.ToUniversalTime();
+        var toUtc = to.ToUniversalTime();
+        var fromWindow = fromUtc.AddDays(-31);
+        var toWindow = toUtc.AddDays(31);
         var teamIds = context.TeamMembers.Where(member => member.UserId == userId).Select(member => member.TeamId);
         var projectIds = context.ProjectMembers.Where(member => member.UserId == userId).Select(member => member.ProjectId);
         var tasks = await context.Tasks.AsNoTracking()
@@ -61,8 +67,8 @@ public sealed class EfCalendarStore(WorknexaDbContext context) : ICalendarStore
                     || task.CreatedBy == userId
                     || (task.TeamId != null && teamIds.Contains(task.TeamId.Value))
                     || (task.ProjectId != null && projectIds.Contains(task.ProjectId.Value)))
-                && ((task.DueAt != null && task.DueAt > from.AddDays(-31) && task.DueAt < to.AddDays(31))
-                    || (task.StartAt != null && task.StartAt < to && (task.DueAt == null || task.DueAt > from))))
+                && ((task.DueAt != null && task.DueAt > fromWindow && task.DueAt < toWindow)
+                    || (task.StartAt != null && task.StartAt < toUtc && (task.DueAt == null || task.DueAt > fromUtc))))
             .OrderBy(task => task.DueAt)
             .Take(200)
             .Select(task => new
@@ -89,17 +95,19 @@ public sealed class EfCalendarStore(WorknexaDbContext context) : ICalendarStore
 
                 return new CalendarTaskSpan(task.Id, task.Title, task.Description, start, end, task.StartAt is null, task.ProjectId, task.ProjectName);
             })
-            .Where(task => task.StartAt < to && task.EndAt > from)
+            .Where(task => task.StartAt < toUtc && task.EndAt > fromUtc)
             .ToArray();
     }
 
     public async Task<IReadOnlyList<CalendarMeetingSpan>> MeetingsAsync(Guid userId, DateTimeOffset from, DateTimeOffset to, CancellationToken cancellationToken)
     {
+        var fromUtc = from.ToUniversalTime();
+        var toUtc = to.ToUniversalTime();
         return await context.Meetings.AsNoTracking()
             .Where(meeting =>
                 meeting.CalendarEventId == null
-                && meeting.StartAt < to
-                && meeting.EndAt > from
+                && meeting.StartAt < toUtc
+                && meeting.EndAt > fromUtc
                 && (meeting.OrganizerId == userId
                     || meeting.Participants.Any(participant => participant.UserId == userId)
                     || (meeting.TeamId != null && context.TeamMembers.Any(member => member.UserId == userId && member.TeamId == meeting.TeamId))))

@@ -8,6 +8,8 @@
   --color-canvas: var(--wx-canvas);
   --color-surface: var(--wx-surface);
   --color-surface-muted: var(--wx-surface-muted);
+  --color-surface-elevated: var(--wx-surface-elevated);
+  --color-surface-compact: var(--wx-surface-compact);
   --color-ink: var(--wx-ink);
   --color-muted: var(--wx-muted);
   --color-line: var(--wx-line);
@@ -28,6 +30,11 @@
   --color-shadcn-muted: var(--shadcn-muted);
   --color-shadcn-border: var(--shadcn-border);
   --font-sans: var(--wx-font);
+  --font-mono: var(--wx-font-mono);
+  --font-serif: var(--wx-font);
+  --font-poppins: var(--wx-font);
   --radius-control: 8px;
-  --radius-card: 12px;
+  --radius-card: 8px;
+  --radius-card-inner: 6px;
+  --radius-pill: 9999px;
 }

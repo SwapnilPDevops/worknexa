@@ -13,15 +13,16 @@ public sealed class EfMeetingStore(WorknexaDbContext context) : IMeetingStore
     public async Task<IReadOnlyList<MeetingListItem>> ListAsync(Guid userId, string view, DateOnly date, int offsetMinutes, CancellationToken cancellationToken)
     {
         var offset = TimeSpan.FromMinutes(offsetMinutes);
-        var dayStart = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, offset);
+        var dayStart = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, offset).ToUniversalTime();
         var dayEnd = dayStart.AddDays(1);
-        var monthStart = new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, offset);
+        var monthStart = new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, offset).ToUniversalTime();
+        var monthEnd = new DateTimeOffset(date.Year, date.Month, 1, 0, 0, 0, offset).AddMonths(1).ToUniversalTime();
         var query = Visible(userId);
         query = view switch
         {
             "today" => query.Where(meeting => meeting.StartAt < dayEnd && meeting.EndAt > dayStart),
             "past" => query.Where(meeting => meeting.EndAt <= dayStart),
-            "calendar" => query.Where(meeting => meeting.StartAt < monthStart.AddMonths(1) && meeting.EndAt > monthStart),
+            "calendar" => query.Where(meeting => meeting.StartAt < monthEnd && meeting.EndAt > monthStart),
             _ => query.Where(meeting => meeting.StartAt >= dayEnd)
         };
 
@@ -78,15 +79,15 @@ public sealed class EfMeetingStore(WorknexaDbContext context) : IMeetingStore
             Id = Guid.NewGuid(),
             Title = request.Title,
             Description = request.Agenda,
-            StartAt = request.StartAt,
-            EndAt = end,
+            StartAt = request.StartAt.ToUniversalTime(),
+            EndAt = end.ToUniversalTime(),
             Location = request.Location,
             MeetingLink = request.MeetingLink,
             MeetingType = meetingType,
             Agenda = request.Agenda,
             NotesText = request.Notes,
             Decisions = request.Decisions,
-            FollowUpAt = request.FollowUpAt,
+            FollowUpAt = request.FollowUpAt?.ToUniversalTime(),
             OrganizerId = userId,
             ProjectId = request.ProjectId,
             TeamId = request.TeamId
@@ -112,15 +113,15 @@ public sealed class EfMeetingStore(WorknexaDbContext context) : IMeetingStore
         await EnsureLinksAsync(request, cancellationToken);
         meeting.Title = request.Title;
         meeting.Description = request.Agenda;
-        meeting.StartAt = request.StartAt;
-        meeting.EndAt = end;
+        meeting.StartAt = request.StartAt.ToUniversalTime();
+        meeting.EndAt = end.ToUniversalTime();
         meeting.Location = request.Location;
         meeting.MeetingLink = request.MeetingLink;
         meeting.MeetingType = meetingType;
         meeting.Agenda = request.Agenda;
         meeting.NotesText = request.Notes;
         meeting.Decisions = request.Decisions;
-        meeting.FollowUpAt = request.FollowUpAt;
+        meeting.FollowUpAt = request.FollowUpAt?.ToUniversalTime();
         meeting.ProjectId = request.ProjectId;
         meeting.TeamId = request.TeamId;
         SyncParticipants(meeting, userId, request.ParticipantIds);

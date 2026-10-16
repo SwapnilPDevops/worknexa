@@ -40,10 +40,10 @@ export function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Profile</h1>
-        <p className="mt-1 text-sm text-muted">{user.email}</p>
+        <h1 className="text-3xl sm:text-[36px] font-semibold text-[#111827]">Profile</h1>
+        <p className="mt-1.5 text-sm leading-[20px] text-[#4b5563]">{user.email}</p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {user.roles.map((role) => (
             <Badge key={role} tone="accent">

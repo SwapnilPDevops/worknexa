@@ -2,7 +2,7 @@ import { useId, type ComponentProps, type ReactNode } from "react";
 import { cn } from "../../utils/cn.ts";
 
 const controlClass =
-  "h-9 w-full rounded-lg border border-line bg-surface px-3 text-sm text-ink outline-none transition-colors placeholder:text-muted focus:border-accent";
+  "h-9 w-full rounded-[8px] border border-[#D1CCC2] bg-[#EBE8E2] px-3 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#4B5563] focus:border-[#111827] focus:ring-1 focus:ring-[#111827]/25";
 
 type FieldProps = {
   label: string;
@@ -19,10 +19,10 @@ export function Field({ label, hint, error, children }: FieldProps) {
 
   return (
     <div className="block">
-      <label className="mb-1.5 block text-[13px] font-medium text-ink" htmlFor={id}>{label}</label>
+      <label className="mb-1.5 block text-[13px] font-medium text-[#111827]" htmlFor={id}>{label}</label>
       {children({ id, describedBy })}
       {hint ? (
-        <span id={hintId} className="mt-1.5 block text-xs text-muted">
+        <span id={hintId} className="mt-1.5 block text-xs text-[#4B5563] font-serif">
           {hint}
         </span>
       ) : null}
@@ -40,7 +40,7 @@ export function Input({ className, ...props }: ComponentProps<"input">) {
 }
 
 export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
-  return <textarea className={cn(controlClass, "min-h-24 py-2", className)} {...props} />;
+  return <textarea className={cn(controlClass, "min-h-24 py-2 leading-relaxed", className)} {...props} />;
 }
 
 export function Select({ className, ...props }: ComponentProps<"select">) {

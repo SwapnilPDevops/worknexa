@@ -27,37 +27,37 @@ export function Header() {
   const unread = notifications.data?.some((item) => !item.isRead) ?? false;
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-line bg-canvas/85 px-3 backdrop-blur-md sm:px-5">
+    <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-[#D1CCC2] bg-[#DFDCD6]/90 px-4 backdrop-blur-[4px] sm:px-6">
       <Button className="lg:hidden" variant="ghost" size="icon" aria-label="Open navigation" onClick={() => setMobileNavOpen(true)}>
         <Menu size={18} aria-hidden="true" />
       </Button>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{item?.label ?? "Worknexa"}</p>
+        <p className="truncate text-sm font-semibold text-[#111827] tracking-tight">{item?.label ?? "Worknexa"}</p>
       </div>
       <button
         type="button"
-        className="hidden h-9 min-w-56 items-center gap-2 rounded-lg border border-line bg-surface px-3 text-sm text-muted hover:border-accent md:flex"
+        className="hidden h-9 min-w-64 items-center gap-2.5 rounded-[8px] border border-[#D1CCC2] bg-[#EBE8E2] px-3 text-xs text-[#4B5563] transition-colors hover:border-[#111827]/40 hover:text-[#111827] md:flex cursor-pointer"
         onClick={() => setCommandOpen(true)}
       >
-        <Search size={15} aria-hidden="true" />
+        <Search size={14} className="text-[#4B5563]" aria-hidden="true" />
         <span className="flex-1 text-left">Search or jump</span>
-        <kbd className="rounded border border-line px-1.5 py-0.5 text-[11px]">{modifierLabel()}</kbd>
+        <kbd className="rounded-[4px] border border-[#D1CCC2] bg-[#DFDCD6] px-1.5 py-0.5 text-[10px] font-mono text-[#4B5563]">{modifierLabel()}</kbd>
       </button>
       <Button className="md:hidden" variant="ghost" size="icon" aria-label="Search" onClick={() => setCommandOpen(true)}>
         <Search size={18} aria-hidden="true" />
       </Button>
-      <Button variant="secondary" onClick={() => setQuickAddOpen(true)}>
-        <Plus size={16} aria-hidden="true" />
+      <Button variant="secondary" size="sm" onClick={() => setQuickAddOpen(true)}>
+        <Plus size={15} aria-hidden="true" />
         <span className="hidden sm:inline">Quick add</span>
       </Button>
-      <Button variant="ghost" size="icon" className="relative" aria-label={unread ? "Open notifications, unread" : "Open notifications"} onClick={() => setNotificationsOpen(true)}>
+      <Button variant="ghost" size="icon" className="relative text-[#4B5563] hover:text-[#111827]" aria-label={unread ? "Open notifications, unread" : "Open notifications"} onClick={() => setNotificationsOpen(true)}>
         <Bell size={18} aria-hidden="true" />
-        {unread ? <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-danger" /> : null}
+        {unread ? <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-danger ring-2 ring-[#DFDCD6]" /> : null}
       </Button>
       <div className="relative">
         <button
           type="button"
-          className="rounded-full"
+          className="rounded-full ring-1 ring-[#D1CCC2] hover:ring-[#111827] transition-all cursor-pointer"
           aria-haspopup="menu"
           aria-expanded={userMenuOpen}
           aria-label="Open account menu"

@@ -169,11 +169,11 @@ export function TasksView({ initialView }: { initialView: TaskView }) {
   const drawerOpen = creating || Boolean(selectedId);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Tasks</h1>
-          <p className="mt-1 text-sm text-muted">Structured work for a project, a person, or a team.</p>
+          <h1 className="wx-headline-lg text-[#111827]">Tasks</h1>
+          <p className="mt-1.5 text-sm leading-[20px] text-[#4B5563]">Structured work for a project, a person, or a team.</p>
         </div>
         {manageable ? <Button onClick={() => openCreate()}>New task</Button> : null}
       </header>
@@ -415,7 +415,7 @@ function TaskTable({ rows, onOpen }: { rows: TaskListItem[]; onOpen: (id: string
       rows={rows}
       getRowKey={(row) => row.id}
       columns={[
-        { key: "title", header: "Title", render: (row) => <button type="button" className="font-medium text-ink" onClick={() => onOpen(row.id)}>{row.title}</button> },
+        { key: "title", header: "Title", render: (row) => <button type="button" className="font-medium text-white hover:text-accent transition-colors cursor-pointer text-left" onClick={() => onOpen(row.id)}>{row.title}</button> },
         { key: "status", header: "Status", render: (row) => labelFor(row.status) },
         { key: "priority", header: "Priority", render: (row) => <Badge tone={priorityTone(row.priority)}>{row.priority}</Badge> },
         { key: "assignee", header: "Assignee", render: (row) => row.assigneeName ?? "Unassigned" },
@@ -428,26 +428,26 @@ function TaskTable({ rows, onOpen }: { rows: TaskListItem[]; onOpen: (id: string
 
 function Kanban({ rows, canMove, onOpen, onMove }: { rows: TaskListItem[]; canMove: boolean; onOpen: (id: string) => void; onMove: (id: string, status: string) => void }) {
   return (
-    <div className="flex gap-3 overflow-x-auto pb-2">
+    <div className="flex gap-3.5 overflow-x-auto pb-3">
       {taskStatuses.map((status) => {
         const cards = rows.filter((row) => row.status === status);
         return (
           <section
             key={status}
-            className="w-64 shrink-0 rounded-xl border border-line bg-surface-muted p-2"
+            className="w-72 shrink-0 rounded-[8px] border border-[#D1CCC2] bg-[#D7D3CB] p-3 shadow-xs"
             onDragOver={(event) => event.preventDefault()}
             onDrop={(event) => onDrop(event, status, onMove)}
           >
-            <h2 className="px-1 py-1 text-xs font-semibold tracking-wide text-muted uppercase">{labelFor(status)} · {cards.length}</h2>
-            <div className="space-y-2">
+            <h2 className="px-1 py-1 text-[11px] font-mono font-semibold tracking-wider text-[#4B5563] uppercase">{labelFor(status)} · {cards.length}</h2>
+            <div className="space-y-2.5 mt-1.5">
               {cards.map((card) => (
                 <article
                   key={card.id}
                   draggable={canMove}
                   onDragStart={(event) => event.dataTransfer.setData("text/plain", card.id)}
-                  className="rounded-lg border border-line bg-surface p-3"
+                  className="rounded-[8px] border border-[#D1CCC2] bg-[#EBE8E2] p-3.5 shadow-xs transition-all hover:border-[#111827]/40"
                 >
-                  <button type="button" className="text-left text-sm font-medium text-ink" onClick={() => onOpen(card.id)}>{card.title}</button>
+                  <button type="button" className="text-left text-sm font-medium text-[#111827] hover:underline transition-colors w-full cursor-pointer" onClick={() => onOpen(card.id)}>{card.title}</button>
                   <div className="mt-2 flex flex-wrap gap-1">
                     <Badge tone={priorityTone(card.priority)}>{card.priority}</Badge>
                     {card.assigneeName ? <Badge>{card.assigneeName}</Badge> : null}

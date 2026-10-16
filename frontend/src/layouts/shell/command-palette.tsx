@@ -240,7 +240,11 @@ export function CommandPalette() {
                       role="option"
                       aria-selected={active}
                       ref={active ? activeRef : undefined}
-                      className={active ? "flex w-full items-center justify-between gap-3 rounded-lg bg-accent-soft px-3 py-2 text-left" : "flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left hover:bg-surface-muted"}
+                      className={
+                        active
+                          ? "flex w-full items-center justify-between gap-3 rounded-[8px] bg-[#FED7AA] border border-[#111827]/15 px-3 py-2 text-left text-[#111827] shadow-xs"
+                          : "flex w-full items-center justify-between gap-3 rounded-[8px] px-3 py-2 text-left text-[#4B5563] hover:bg-[#D7D3CB]/60 hover:text-[#111827] transition-colors"
+                      }
                       onMouseEnter={() => setActiveIndex(index)}
                       onClick={() => {
                         item.run();

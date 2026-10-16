@@ -175,14 +175,19 @@ export function ProjectsView() {
             <li key={project.id}>
               <button
                 type="button"
-                className={cn("w-full rounded-lg px-3 py-2 text-left", project.id === selectedId ? "bg-surface-muted" : "hover:bg-surface-muted")}
+                className={cn(
+                  "w-full rounded-[8px] px-3.5 py-2.5 text-left border transition-all cursor-pointer",
+                  project.id === selectedId
+                    ? "bg-[#FED7AA] border-[#111827]/15 text-[#111827] shadow-xs"
+                    : "border-transparent hover:bg-[#EBE8E2] hover:border-[#D1CCC2] text-[#4B5563] hover:text-[#111827]"
+                )}
                 onClick={() => setParams({ project: project.id, tab })}
               >
                 <span className="flex items-center justify-between gap-2">
-                  <span className="truncate text-sm font-medium text-ink">{project.name}</span>
+                  <span className="truncate text-sm font-semibold text-[#111827] font-mono">{project.name}</span>
                   <Badge tone={statusTone(project.status)}>{labelFor(project.status)}</Badge>
                 </span>
-                <span className="mt-1 block text-xs text-muted">{project.code} · {project.progress}%</span>
+                <span className="mt-1 block text-xs text-[#4B5563] font-mono tabular-nums">{project.code} · {project.progress}%</span>
               </button>
             </li>
           ))}
@@ -193,11 +198,11 @@ export function ProjectsView() {
         {selectedId && detail.isPending ? <LoadingState label="Loading project" /> : null}
         {selectedId && detail.isError ? <ErrorState title="This project is unavailable" description={detail.error instanceof ApiError ? detail.error.message : "Try again."} /> : null}
         {detail.data ? (
-          <div className="space-y-4">
+          <div className="space-y-5">
             <header className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-xs tracking-wide text-muted uppercase">{detail.data.code}</p>
-                <h2 className="text-2xl font-semibold text-ink">{detail.data.name}</h2>
+                <p className="text-xs font-semibold tracking-wider text-muted uppercase">{detail.data.code}</p>
+                <h2 className="text-2xl sm:text-[32px] font-semibold tracking-[-0.025em] text-white mt-1">{detail.data.name}</h2>
                 <p className="mt-1 text-sm text-muted">{detail.data.ownerName}{detail.data.teamName ? ` · ${detail.data.teamName}` : ""}</p>
               </div>
               <div className="flex gap-2">

@@ -38,10 +38,10 @@ export function InboxView() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
+    <div className="w-full space-y-6">
       <div>
-        <h1 className="text-lg font-semibold">Notifications</h1>
-        <p className="mt-1 text-sm text-muted">What needs you, and what just happened in the workspace.</p>
+        <h1 className="wx-headline-lg text-ink font-semibold">Notifications</h1>
+        <p className="mt-1 wx-body-md text-muted">What needs you, and what just happened in the workspace.</p>
       </div>
       <Tabs tabs={tabs} value={tab} onChange={setTab} label="Notification views" />
       {tab === "inbox" ? <InboxPanel /> : null}
@@ -99,14 +99,14 @@ function InboxPanel() {
 
 function NotificationRow({ item, pending, onOpen, onUnread }: { item: NotificationItem; pending: boolean; onOpen: () => void; onUnread: () => void }) {
   return (
-    <div className={cn("rounded-lg border border-line px-3 py-2", item.isRead ? "bg-surface" : "bg-accent-soft")}>
-      <button type="button" className="w-full text-left" onClick={onOpen}>
+    <div className={cn("rounded-[8px] border px-3 py-2 transition-colors", item.isRead ? "border-[#D1CCC2] bg-[#DFDCD6]" : "border-[#111827]/20 bg-[#FED7AA]/30")}>
+      <button type="button" className="w-full text-left cursor-pointer" onClick={onOpen}>
         <span className="flex items-center gap-2">
           <Badge>{notificationLabel(item.type)}</Badge>
-          <span className="text-sm font-medium">{item.title}</span>
+          <span className="text-sm font-medium text-[#111827]">{item.title}</span>
         </span>
-        <span className="mt-1 block text-xs text-muted">{item.body}</span>
-        <span className="mt-1 block text-[11px] text-muted">{format(new Date(item.createdAt), "d MMM, HH:mm")}</span>
+        <span className="mt-1 block text-xs text-[#4B5563] font-serif">{item.body}</span>
+        <span className="mt-1 block text-[11px] text-[#4B5563] font-mono">{format(new Date(item.createdAt), "d MMM, HH:mm")}</span>
       </button>
       {item.isRead ? (
         <Button className="mt-2" variant="ghost" size="sm" disabled={pending} onClick={onUnread}>Mark unread</Button>

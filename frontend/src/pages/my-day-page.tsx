@@ -23,7 +23,7 @@ export function MyDayPage() {
 
   if (query.isPending) {
     return (
-      <div className="mx-auto max-w-6xl space-y-4" role="status" aria-live="polite" aria-busy="true">
+      <div className="w-full space-y-4" role="status" aria-live="polite" aria-busy="true">
         <span className="sr-only">Loading your day</span>
         <div className="wx-skeleton h-8 w-64 rounded-md" />
         <div className="wx-skeleton h-4 w-96 max-w-full rounded-md" />

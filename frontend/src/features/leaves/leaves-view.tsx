@@ -95,11 +95,11 @@ export function LeavesView() {
     : null;
 
   return (
-    <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Leaves</h1>
-          <p className="mt-1 text-sm text-muted">Time away, so planning stays honest.</p>
+          <h1 className="wx-headline-lg text-[#111827]">Leaves</h1>
+          <p className="mt-1.5 text-sm leading-[20px] text-[#4B5563]">Time away, so planning stays honest.</p>
         </div>
         <Button onClick={() => { setDraft({ employeeId: manageable ? "" : user?.id ?? "", leaveTypeId: options.data?.leaveTypes[0]?.id ?? "", startDate: "", endDate: "", reason: "" }); setCreating(true); setMessage(null); }}>Request leave</Button>
       </header>

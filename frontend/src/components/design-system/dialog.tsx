@@ -41,13 +41,13 @@ export function Dialog({ open, title, description, onClose, children, className 
         onClose();
       }}
     >
-      <div className={cn("w-[min(32rem,calc(100vw-2rem))] rounded-xl border border-line bg-surface p-5 text-ink shadow-[var(--wx-shadow-panel)]", className)}>
+      <div className={cn("w-[min(32rem,calc(100vw-2rem))] rounded-[8px] border border-[#D1CCC2] bg-[#EBE8E2] p-5 text-[#111827] shadow-[var(--wx-shadow-panel)]", className)}>
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
-            <h2 id={titleId} className="text-base font-semibold">
+            <h2 id={titleId} className="text-sm font-mono font-semibold text-[#111827]">
               {title}
             </h2>
-            {description ? <p className="mt-1 text-sm text-muted">{description}</p> : null}
+            {description ? <p className="mt-1 text-xs text-[#4B5563] font-serif">{description}</p> : null}
           </div>
           <Button variant="ghost" size="icon" aria-label="Close dialog" onClick={onClose}>
             <X size={16} aria-hidden="true" />

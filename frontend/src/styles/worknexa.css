@@ -1,27 +1,35 @@
 :root {
   color-scheme: light;
-  --wx-canvas: #f3f5f8;
-  --wx-surface: #ffffff;
-  --wx-surface-muted: #eef1f6;
-  --wx-ink: #16181d;
-  --wx-muted: #5e6673;
-  --wx-line: #e2e6ee;
-  --wx-accent: #2451e6;
-  --wx-accent-foreground: #ffffff;
-  --wx-accent-soft: #e7edff;
-  --wx-signal: #0d7a68;
-  --wx-signal-soft: #e5f6f2;
-  --wx-warning: #8a5a00;
-  --wx-warning-soft: #fff4d8;
-  --wx-danger: #b4233c;
-  --wx-danger-soft: #fde8ec;
-  --wx-overlay: rgba(16, 18, 24, 0.42);
-  --wx-shadow-rest: 0 1px 2px rgba(16, 18, 24, 0.04);
-  --wx-shadow-panel: 0 18px 50px rgba(16, 18, 24, 0.16);
-  --wx-sidebar: 248px;
+  --wx-canvas: #e6e1da;
+  --wx-surface: #dfdcd6;
+  --wx-surface-muted: #d7d3cb;
+  --wx-surface-elevated: #ebe8e2;
+  --wx-surface-compact: #d7d3cb;
+  --wx-ink: #111827;
+  --wx-muted: #4b5563;
+  --wx-line: #d1ccc2;
+  --wx-line-subtle: rgba(17, 24, 39, 0.1);
+  --wx-line-card: rgba(17, 24, 39, 0.12);
+  --wx-accent: #fed7aa;
+  --wx-accent-foreground: #111827;
+  --wx-accent-soft: rgba(254, 215, 170, 0.4);
+  --wx-accent-highlight: #ffedd5;
+  --wx-signal: #059669;
+  --wx-signal-soft: rgba(5, 150, 105, 0.12);
+  --wx-warning: #d97706;
+  --wx-warning-soft: rgba(217, 119, 6, 0.12);
+  --wx-danger: #dc2626;
+  --wx-danger-soft: rgba(220, 38, 38, 0.12);
+  --wx-overlay: rgba(17, 24, 39, 0.45);
+  --wx-shadow-rest: 0 1px 3px 0 rgba(17, 24, 39, 0.05);
+  --wx-shadow-panel: 0 4px 14px -2px rgba(17, 24, 39, 0.08), 0 2px 4px -2px rgba(17, 24, 39, 0.04);
+  --wx-shadow-glow: 0 0 35px -8px rgba(254, 215, 170, 0.6);
+  --wx-sidebar: 250px;
   --wx-sidebar-collapsed: 72px;
   --wx-header: 56px;
-  --wx-font: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --wx-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --wx-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --wx-font-serif: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --shadcn-background: var(--wx-surface);
   --shadcn-foreground: var(--wx-ink);
   --shadcn-primary: var(--wx-accent);
@@ -30,26 +38,33 @@
   --shadcn-border: var(--wx-line);
 }
 
-[data-theme="dark"] {
-  color-scheme: dark;
-  --wx-canvas: #0e1014;
-  --wx-surface: #171a21;
-  --wx-surface-muted: #212632;
-  --wx-ink: #f4f6f8;
-  --wx-muted: #a3acba;
-  --wx-line: #2c3340;
-  --wx-accent: #8ea2ff;
-  --wx-accent-foreground: #0e1014;
-  --wx-accent-soft: rgba(142, 162, 255, 0.16);
-  --wx-signal: #7ddecb;
-  --wx-signal-soft: rgba(125, 222, 203, 0.14);
-  --wx-warning: #f0c36a;
-  --wx-warning-soft: rgba(240, 195, 106, 0.14);
-  --wx-danger: #ff8b9a;
-  --wx-danger-soft: rgba(255, 139, 154, 0.14);
-  --wx-overlay: rgba(0, 0, 0, 0.58);
-  --wx-shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.28);
-  --wx-shadow-panel: 0 18px 50px rgba(0, 0, 0, 0.45);
+[data-theme="dark"],
+[data-theme="light"] {
+  color-scheme: light;
+  --wx-canvas: #e6e1da;
+  --wx-surface: #dfdcd6;
+  --wx-surface-muted: #d7d3cb;
+  --wx-surface-elevated: #ebe8e2;
+  --wx-surface-compact: #d7d3cb;
+  --wx-ink: #111827;
+  --wx-muted: #4b5563;
+  --wx-line: #d1ccc2;
+  --wx-line-subtle: rgba(17, 24, 39, 0.1);
+  --wx-line-card: rgba(17, 24, 39, 0.12);
+  --wx-accent: #fed7aa;
+  --wx-accent-foreground: #111827;
+  --wx-accent-soft: rgba(254, 215, 170, 0.4);
+  --wx-accent-highlight: #ffedd5;
+  --wx-signal: #059669;
+  --wx-signal-soft: rgba(5, 150, 105, 0.12);
+  --wx-warning: #d97706;
+  --wx-warning-soft: rgba(217, 119, 6, 0.12);
+  --wx-danger: #dc2626;
+  --wx-danger-soft: rgba(220, 38, 38, 0.12);
+  --wx-overlay: rgba(17, 24, 39, 0.45);
+  --wx-shadow-rest: 0 1px 3px 0 rgba(17, 24, 39, 0.05);
+  --wx-shadow-panel: 0 4px 14px -2px rgba(17, 24, 39, 0.08), 0 2px 4px -2px rgba(17, 24, 39, 0.04);
+  --wx-shadow-glow: 0 0 35px -8px rgba(254, 215, 170, 0.6);
 }
 
 html,
@@ -60,16 +75,87 @@ body,
 
 body {
   margin: 0;
-  background: var(--wx-canvas);
+  background-color: var(--wx-canvas);
+  background-image: radial-gradient(at 10% 10%, rgba(254, 215, 170, 0.25) 0px, transparent 40%),
+                    radial-gradient(at 90% 90%, rgba(223, 220, 214, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--wx-ink);
   font-family: var(--wx-font);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography styles using Poppins */
+.wx-display-lg {
+  font-family: var(--wx-font);
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--wx-ink);
+}
+
+.wx-headline-lg {
+  font-family: var(--wx-font);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--wx-ink);
+}
+
+.wx-body-md {
+  font-family: var(--wx-font);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--wx-muted);
+}
+
+.wx-label-md {
+  font-family: var(--wx-font);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--wx-muted);
+}
+
+/* Glass & Surface treatments per design.md */
+.wx-glass {
+  background-color: rgba(223, 220, 214, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wx-line-card);
+}
+
+.wx-glass-elevated {
+  background-color: rgba(235, 232, 226, 0.95);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wx-line);
+  box-shadow: var(--wx-shadow-panel);
+}
+
+.wx-glass-compact {
+  background-color: rgba(215, 211, 203, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wx-line-subtle);
+}
+
+.wx-gradient-border-shell {
+  position: relative;
+  border-radius: 9999px;
+  padding: 1px;
+  background: conic-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 90%, rgba(254, 215, 170, 0.6) 95%, rgba(223, 220, 214, 0.6) 100%);
 }
 
 ::selection {
-  background: var(--wx-accent-soft);
+  background: var(--wx-accent);
   color: var(--wx-ink);
 }
 
@@ -93,10 +179,11 @@ body {
 
 .wx-dialog::backdrop {
   background: var(--wx-overlay);
+  backdrop-filter: blur(4px);
 }
 
 .wx-skeleton {
-  background: linear-gradient(90deg, var(--wx-surface-muted), var(--wx-line), var(--wx-surface-muted));
+  background: linear-gradient(90deg, #dfdcd6, #ebe8e2, #dfdcd6);
   background-size: 200% 100%;
 }
 
@@ -175,4 +262,17 @@ body {
   to {
     background-position: -100% 0;
   }
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
+}
+
+.animate-shiny-text {
+  animation: shine 5s linear infinite;
 }

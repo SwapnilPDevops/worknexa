@@ -7,6 +7,7 @@ import { Field, Input } from "../components/design-system/field.tsx";
 import { LoadingState } from "../components/design-system/states.tsx";
 import { useZodForm } from "../hooks/use-zod-form.ts";
 import { ApiError } from "../services/api-client.ts";
+import { ShinyText, SpotlightCard } from "../components/react-bits/index.ts";
 
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email."),
@@ -38,13 +39,15 @@ export function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-canvas px-4 py-10 text-ink">
-      <div className="w-full max-w-md rounded-xl border border-line bg-surface p-6 shadow-[var(--wx-shadow-rest)]">
-        <div className="mb-6 flex items-center gap-3">
-          <img src="/brand/worknexa-mark.svg" alt="" width={32} height={32} className="size-8" />
+    <main className="flex min-h-dvh items-center justify-center bg-canvas px-4 py-12 text-[#111827]">
+      <SpotlightCard className="w-full max-w-md p-8 shadow-[0_4px_16px_0_rgba(17,24,39,0.08)] bg-[#DFDCD6]">
+        <div className="mb-8 flex items-center gap-3">
+          <img src="/brand/worknexa-mark.svg" alt="" width={36} height={36} className="size-9 shrink-0" />
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Worknexa</h1>
-            <p className="text-xs text-muted">Your Work. One Intelligent Place.</p>
+            <h1 className="text-xl font-semibold tracking-tight text-[#111827]">Worknexa</h1>
+            <p className="text-xs text-[#4B5563] font-mono">
+              <ShinyText>SYS.DOC // 001.4 STRATEGIC WORKSPACE</ShinyText>
+            </p>
           </div>
         </div>
         <form
@@ -71,15 +74,15 @@ export function LoginPage() {
             )}
           </Field>
           {error ? (
-            <p role="alert" className="rounded-lg bg-danger-soft px-3 py-2 text-sm text-danger">
+            <p role="alert" className="rounded-lg border border-danger/30 bg-danger/10 px-3 py-2 text-sm text-danger">
               {error}
             </p>
           ) : null}
-          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          <Button type="submit" className="w-full mt-2 font-medium" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? "Signing in" : "Sign in"}
           </Button>
         </form>
-      </div>
+      </SpotlightCard>
     </main>
   );
 }

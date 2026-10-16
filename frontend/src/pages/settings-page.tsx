@@ -18,26 +18,26 @@ export function SettingsPage() {
   }, []);
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Settings</h1>
-        <p className="mt-1 text-sm text-muted">Appearance for this browser. Account settings arrive with sign-in.</p>
+        <h1 className="text-3xl sm:text-[36px] font-semibold text-[#111827]">Settings</h1>
+        <p className="mt-1.5 text-sm leading-[20px] text-[#4b5563]">Appearance for this browser. Account settings arrive with sign-in.</p>
       </div>
       <Card>
         <CardHeader title="Theme" description="Light, dark, or match the system." />
-        <CardBody className="grid gap-2">
+        <CardBody className="grid gap-2.5">
           {options.map((option) => (
-            <label key={option.id} className="flex cursor-pointer items-start gap-3 rounded-lg border border-line px-3 py-3 has-checked:border-accent has-checked:bg-accent-soft">
+            <label key={option.id} className="flex cursor-pointer items-start gap-3 rounded-[8px] border border-[#d1ccc2] bg-[#ebe8e2] px-3.5 py-3 has-checked:border-[#111827] has-checked:bg-[#fed7aa]/35 transition-colors">
               <input
                 type="radio"
                 name="theme"
-                className="mt-1"
+                className="mt-1 accent-[#111827]"
                 checked={preference === option.id}
                 onChange={() => setPreference(option.id)}
               />
               <span>
-                <span className="block text-sm font-medium">{option.label}</span>
-                <span className="block text-xs text-muted">{option.detail}</span>
+                <span className="block text-sm font-medium text-[#111827]">{option.label}</span>
+                <span className="block text-xs text-[#4b5563]">{option.detail}</span>
               </span>
             </label>
           ))}
@@ -47,7 +47,7 @@ export function SettingsPage() {
       <Card>
         <CardHeader title="Design system" description="Reusable components used by the shell." />
         <CardBody>
-          <Link to="/foundations" className="text-sm font-medium text-accent">
+          <Link to="/foundations" className="text-sm font-medium text-[#111827] underline decoration-[#fed7aa] underline-offset-4 hover:decoration-[#111827]">
             Open the component library
           </Link>
         </CardBody>

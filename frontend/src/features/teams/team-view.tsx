@@ -140,38 +140,56 @@ export function TeamView() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-5">
+    <div className="w-full space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Team</h1>
-          <p className="mt-1 text-sm text-muted">People you work with, and the groups they belong to.</p>
+          <h1 className="wx-headline-lg text-[#111827]">Team</h1>
+          <p className="mt-1.5 text-sm leading-[20px] text-[#4B5563]">People you work with, and the groups they belong to.</p>
         </div>
         {manageable ? <Button onClick={() => { setEditing(false); setCreating(true); setTeamDraft({ name: "", description: "" }); setMessage(null); }}>New team</Button> : null}
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[16rem_1fr]">
-        <div className="space-y-4">
+      <div className="grid gap-5 lg:grid-cols-[17rem_1fr]">
+        <div className="space-y-5">
           <Card>
             <CardHeader title="Teams" />
-            <CardBody className="space-y-1">
+            <CardBody className="space-y-1.5">
               {teams.data.length === 0 ? <p className="text-sm text-muted">No teams yet.</p> : teams.data.map((item) => (
-                <button key={item.id} type="button" className={teamId === item.id ? "block w-full rounded-lg bg-surface-muted px-2 py-1.5 text-left text-sm font-medium text-ink" : "block w-full rounded-lg px-2 py-1.5 text-left text-sm text-ink hover:bg-surface-muted"} onClick={() => setParams({ team: item.id })}>
-                  {item.name}
-                  <span className="mt-0.5 block text-xs text-muted">{item.memberCount} {item.memberCount === 1 ? "person" : "people"}</span>
+                <button
+                  key={item.id}
+                  type="button"
+                  className={
+                    teamId === item.id
+                      ? "block w-full rounded-[8px] bg-[#FED7AA] border border-[#111827]/15 px-3 py-2 text-left text-sm font-semibold text-[#111827] shadow-xs cursor-pointer font-mono"
+                      : "block w-full rounded-[8px] px-3 py-2 text-left text-sm text-[#4B5563] hover:text-[#111827] hover:bg-[#EBE8E2] transition-colors cursor-pointer font-mono"
+                  }
+                  onClick={() => setParams({ team: item.id })}
+                >
+                  <span className="block font-semibold text-[#111827]">{item.name}</span>
+                  <span className="mt-0.5 block text-xs text-[#4B5563] font-mono tabular-nums">{item.memberCount} {item.memberCount === 1 ? "person" : "people"}</span>
                 </button>
               ))}
             </CardBody>
           </Card>
           <Card>
             <CardHeader title="People" />
-            <CardBody className="space-y-2">
+            <CardBody className="space-y-2.5">
               <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search name or email" aria-label="Search people" />
-              {people.data.length === 0 ? <p className="text-sm text-muted">No matching people.</p> : people.data.map((person) => (
-                <button key={person.id} type="button" className={memberId === person.id ? "flex w-full items-center gap-2 rounded-lg bg-surface-muted px-2 py-1.5 text-left" : "flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left hover:bg-surface-muted"} onClick={() => { setTab("details"); setParams({ member: person.id }); }}>
+              {people.data.length === 0 ? <p className="text-sm text-[#4B5563] font-serif">No matching people.</p> : people.data.map((person) => (
+                <button
+                  key={person.id}
+                  type="button"
+                  className={
+                    memberId === person.id
+                      ? "flex w-full items-center gap-2.5 rounded-[8px] bg-[#FED7AA] border border-[#111827]/15 px-3 py-2 text-left text-[#111827] shadow-xs cursor-pointer"
+                      : "flex w-full items-center gap-2.5 rounded-[8px] px-3 py-2 text-left text-[#4B5563] hover:text-[#111827] hover:bg-[#EBE8E2] transition-colors cursor-pointer"
+                  }
+                  onClick={() => { setTab("details"); setParams({ member: person.id }); }}
+                >
                   <Avatar name={person.name} photoUrl={person.photoUrl} />
-                  <span>
-                    <span className="block text-sm font-medium text-ink">{person.name}</span>
-                    <span className="block text-xs text-muted">{person.designation ?? person.email}</span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-medium text-[#111827]">{person.name}</span>
+                    <span className="block truncate text-xs text-[#4B5563] font-serif">{person.designation ?? person.email}</span>
                   </span>
                 </button>
               ))}

@@ -52,7 +52,7 @@ export function Drawer({ open, title, onClose, children, side = "right", classNa
         )}
       >
         <header className="flex h-14 items-center justify-between border-b border-line px-4">
-          <h2 id={titleId} className="text-sm font-semibold">
+          <h2 id={titleId} className="text-sm font-mono font-semibold text-[#111827]">
             {title}
           </h2>
           <Button variant="ghost" size="icon" aria-label="Close panel" onClick={onClose}>
